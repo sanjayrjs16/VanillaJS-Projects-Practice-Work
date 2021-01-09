@@ -1,5 +1,5 @@
 var id = 0;
-// Function to toggle todos
+// Function to toggle todos upon clicking
 const toggleTodo = (e) => {
     console.log(e.target, " ================", e.currentTarget);
     if(e.target.matches("input")){
@@ -16,6 +16,8 @@ const toggleTodo = (e) => {
     }
 }
 
+// event listner for add button
+
 let addButton = document.getElementById("add-task");
 addButton.addEventListener("click", (e) => {
     let task = document.getElementById("task-input");
@@ -30,30 +32,7 @@ addButton.addEventListener("click", (e) => {
         checkBox.type="checkbox";
         let todoContent = document.createElement("span");
         todoContent.textContent = task.value;
-        //===============Approach 1 - attaching event listner to each individual checklist item
-        // checkBox.addEventListener("click", (e) => {
-        //     if(checkBox.checked){
-        //         checkBox.checked = false;
-        //         todoContent.style.textDecoration = "none";
-        //     }
-        //     else{
-        //         checkBox.checked = true;
-        //         todoContent.style.textDecoration = "line-through"
-
-        //     }
-        //     
-        // });
-        //===============Approach 1 - attaching event listner to each individual todo item
-        // todoItem.addEventListener("click", (e) => {
-        //     if(!(checkBox.checked)){
-        //         todoContent.style.textDecoration = "line-through";
-        //         checkBox.checked = true;}
-        //         else{
-        //             todoContent.style.textDecoration = "none";
-        //             checkBox.checked = false;
-        //         }
-        //         console.log(e.target, " ============", e.currentTarget);
-        // });
+  
         todoItem.append(checkBox, todoContent);
         let todoList = document.getElementById("todos-display");
         todoList.addEventListener("click", toggleTodo);
@@ -61,4 +40,46 @@ addButton.addEventListener("click", (e) => {
         task.value = "";
 
     }
+});
+
+// event listner for clear button
+let clearButton = document.getElementById("clear-all-tasks");
+clearButton.addEventListener("click", (e) => {
+    let todoItems = document.getElementById("todos-display"), i = 0;
+    if(todoItems.childNodes.length===0){
+        alert("There's nothing to clear as of now.");
+    }
+   else{ 
+       let popInterval = setInterval((i) => {
+        todoItems.removeChild(todoItems.firstChild);
+        i = i + 1;
+        console.log(todoItems.childNodes.length, " more chids left to remove");
+        if(todoItems.childNodes.length == 0){
+            clearInterval(popInterval);
+            console.log("All done!")
+        }
+    }, 200);}
+});
+
+//
+let checkButton = document.getElementById("check-all-tasks");
+checkButton.addEventListener("click", (e) => {
+    console.log(document.getElementById("todos-display").children);
+    let todoList = document.getElementById("todos-display").childNodes, i = 0;
+    console.log(todoList[1].firstChild.checked);
+    todoList.forEach( (element) => {
+        document.getElementById(element.id).firstElementChild.checked =true;
+        document.getElementById(element.id).lastElementChild.style.textDecoration = "line-through";
+    })
+});
+
+let uncheckButton = document.getElementById("uncheck-all-tasks");
+uncheckButton.addEventListener("click", (e) => {
+    console.log(document.getElementById("todos-display").children);
+    let todoList = document.getElementById("todos-display").childNodes, i = 0;
+    console.log(todoList[1].firstChild.checked);
+    todoList.forEach( (element) => {
+        document.getElementById(element.id).firstElementChild.checked =false;
+        document.getElementById(element.id).lastElementChild.style.textDecoration = "none";
+    })
 });
