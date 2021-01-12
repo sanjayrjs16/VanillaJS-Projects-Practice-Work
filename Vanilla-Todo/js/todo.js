@@ -43,17 +43,53 @@ todoActions.addEventListener("click", (e) => {
                 alert("No tasks added");
             }
             else{
-                for(let child of taskList.childNodes){
-                    taskList.removeChild(child);
-                }
-               
+                let tastClearInterval = setInterval(() => {
+                
+                   
+                        taskList.removeChild(taskList.firstChild);
+                    
+                    }, 300);
+                    if(taskList.children.length == 0){
+                        clearInterval(tastClearInterval);    
+                    }
             }
+            
           break;
         }
         case "check-all-tasks": {
+            let taskList = document.getElementById("todos-display");
+            if(taskList.childNodes.length == 0){
+                alert("There are no tasks to check");
+            }
+            else{
+                for(let child of taskList.children){
+                    if(child.firstChild.checked){
+                        continue;
+                    }
+                    else{
+                        child.firstChild.checked = true;
+                    }
+                    //child.firstChild.checked?continue:child.firstChild.checked = true;
+                }
+            }
             break;
         }
         case "uncheck-all-tasks":{
+            let taskList = document.getElementById("todos-display");
+            if(taskList.childNodes.length == 0){
+                alert("There are no tasks to un-check ");
+            }
+            else{
+                for(let child of taskList.children){
+                    if(!(child.firstChild.checked)){
+                        continue;
+                    }
+                    else{
+                        child.firstChild.checked = false;
+                    }
+                    //child.firstChild.checked?continue:child.firstChild.checked = true;
+                }
+            }
             break;
         }
         default:{
