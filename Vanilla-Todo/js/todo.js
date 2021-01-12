@@ -2,7 +2,7 @@ var id = 0;
 // Function to toggle todos upon clicking
 const toggleTodo = (e) => {
     console.log(e.target, " ================", e.currentTarget);
-    if(e.target.matches("input")){
+    //if(e.target.matches("input")){
         let todoSpan = e.target.nextSibling;
         if(e.target.checked){
             todoSpan.style.textDecoration = "line-through";
@@ -10,38 +10,62 @@ const toggleTodo = (e) => {
         else{  
             todoSpan.style.textDecoration = "none";
         }
-    }
-    else{
-        return
-    }
+    // }
+    // else{
+    //     return
+    // }
 }
 
-let todoActions = document.getElementById("todo-actions");
+let todoActions = document.getElementById("todo-list-container");
 todoActions.addEventListener("click", (e) => {
     switch(e.target.id){
         case "add-task": {
             let taskEntered = document.getElementById("task-input");
             if(taskEntered.value===""){
-                alert("No task entered yet")
+                alert("No task entered yet");
             }
             else{
-                
+                let todoItem = document.createElement("div");
+                let checkBox = document.createElement("input");
+                checkBox.type = "checkbox";
+                let todoContent = document.createElement("span");
+                todoContent.textContent = taskEntered.value;
+                todoItem.append(checkBox, todoContent);
+                document.getElementById("todos-display").append(todoItem);
+                taskEntered.value = "";
+
             }
+            break;  
         }
         case "clear-all-tasks": {
-
+            let taskList = document.getElementById("todos-display");
+            if(taskList.childNodes.length==0){
+                alert("No tasks added");
+            }
+            else{
+                for(let child of taskList.childNodes){
+                    taskList.removeChild(child);
+                }
+               
+            }
+          break;
         }
         case "check-all-tasks": {
-
+            break;
         }
         case "uncheck-all-tasks":{
-
+            break;
         }
         default:{
+            if(e.target.tagName==="INPUT" && e.target.getAttribute("type") ==="checkbox"){
+                toggleTodo(e);
+             }
             break
         }
 
-    }
+    };
+
+   
 })
 
 // // event listner for add button
