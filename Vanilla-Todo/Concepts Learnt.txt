@@ -1,0 +1,3 @@
+This basic todo app was made with vanilla JS, (No styling), just to brush up the basics of JS.
+
+The concepts learned were some basic DOM manipulation, adding event listners,  event delegation, event bubbling, eventCapturing, NodeList objects, setInterval function(ClearIntervals), 
